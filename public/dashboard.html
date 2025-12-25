@@ -1,15 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Income and Expense Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .sidebar-link.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+    </style>
 </head>
-<body>
-    <main>
-        <h1>Wellcome to dashboard</h1>
-        <button onclick="logout()">logout</button>
-    </main>
-    <script src="../js/dashboard.js"></script>
+
+<body class="bg-[#1a1c23] text-gray-200 font-sans min-h-screen">
+
+    <header class="flex items-center justify-between px-8 py-4 border-b border-gray-800">
+        <div class="flex items-center gap-2">
+            <div class="bg-blue-600 p-1 rounded text-white"><i data-lucide="wallet"></i></div>
+            <div>
+                <h1 class="text-xl font-bold text-blue-500">Income and Expense Tracker</h1>
+                <p class="text-xs text-gray-500">Take control of your finances</p>
+            </div>
+        </div>
+        <!-- Add Income Button triggers modal -->
+        <button onclick="openAddIncomeModal()" class="w-40 h-8 bg-blue-500 rounded font-bold hover:text-white">Add
+            Income</button>
+    </header>
+
+    <div class="flex">
+        <aside class="w-64 border-r border-gray-800 p-6 space-y-8 min-h-[calc(100vh-80px)]">
+            <div class="flex flex-col items-center text-center space-y-2 mb-8">
+                <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
+                    <i data-lucide="user" class="text-white w-8 h-8"></i>
+                </div>
+                <p class="font-bold text-lg">Welcome!</p>
+            </div>
+
+            <nav class="space-y-2 text-gray-400">
+                <a href="#" onclick="showView('dashboard')"
+                    class="sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors"
+                    id="link-dashboard">
+                    <i data-lucide="home" class="w-5 h-5"></i> Dashboard
+                </a>
+                <a href="#" onclick="showView('transactions')"
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors"
+                    id="link-transactions">
+                    <i data-lucide="arrow-left-right" class="w-5 h-5"></i> Transactions
+                </a>
+                <a href="#" onclick="showView('budgets')"
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors" id="link-budgets">
+                    <i data-lucide="pie-chart" class="w-5 h-5"></i> Budgets
+                </a>
+                <a href="#" onclick="showView('reports')"
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors" id="link-reports">
+                    <i data-lucide="trending-up" class="w-5 h-5"></i> Reports
+                </a>
+                <a href="#" onclick="showView('savings')"
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors" id="link-savings">
+                    <i data-lucide="target" class="w-5 h-5"></i> Savings Goals
+                </a>
+                <button
+                    class="w-full flex items-center gap-3 p-3 mt-10 text-xs border border-gray-700 rounded hover:bg-gray-800">
+                    <i data-lucide="download" class="w-4 h-4"></i> Export Data
+                </button>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8">
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="view-section active space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-[#24262d] p-5 rounded-xl border border-gray-800">
+                        <p class="text-gray-400 text-sm">Total Balance</p>
+                        <h2 id="totalBalance" class="text-2xl font-bold">$0.00</h2>
+                        <p class="text-green-500 text-xs mt-1">Updated</p>
+                    </div>
+                    <div class="bg-[#24262d] p-5 rounded-xl border border-gray-800">
+                        <p class="text-gray-400 text-sm">Monthly Income</p>
+                        <h2 id="monthlyIncome" class="text-2xl font-bold">$0.00</h2>
+                        <p class="text-gray-500 text-xs mt-1">This month</p>
+                    </div>
+                    <div class="bg-[#24262d] p-5 rounded-xl border border-gray-800">
+                        <p class="text-gray-400 text-sm text-red-400">Monthly Expenses</p>
+                        <h2 id="monthlyExpense" class="text-2xl font-bold">$0.00</h2>
+                        <p class="text-gray-500 text-xs mt-1">This month</p>
+                    </div>
+                    <div class="bg-[#24262d] p-5 rounded-xl border border-gray-800">
+                        <p class="text-gray-400 text-sm">Savings Rate</p>
+                        <h2 id="savingsRate" class="text-2xl font-bold">0%</h2>
+                        <p class="text-gray-500 text-xs mt-1">% of income</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-[#24262d] p-10 rounded-xl border border-gray-800 h-96">
+                        <h3 class="text-blue-500 font-bold mb-4">Spending by Category</h3>
+                        <canvas id="spendingChart"></canvas>
+                    </div>
+                    <div class="bg-[#24262d] p-10 rounded-xl border border-gray-800 h-96">
+                        <h3 class="text-blue-500 font-bold mb-4">Monthly Overview</h3>
+                        <canvas id="overviewChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Income Modal -->
+    <div id="incomeModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
+        <div class="bg-[#24262d] p-6 rounded-xl w-96 border border-gray-700">
+            <h2 class="text-lg font-bold mb-4 text-blue-400">Add New Income</h2>
+            <label class="block text-sm mb-1">Description</label>
+            <input id="incomeDesc" class="w-full p-2 mb-3 bg-gray-800 rounded text-white"
+                placeholder="Salary, Bonus..." />
+            <label class="block text-sm mb-1">Amount</label>
+            <input id="incomeAmount" type="number" class="w-full p-2 mb-3 bg-gray-800 rounded text-white"
+                placeholder="Enter amount" />
+            <label class="block text-sm mb-1">Type</label>
+            <select id="incomeType" class="w-full p-2 mb-3 bg-gray-800 rounded text-white">
+                <option value="Salary">Salary</option>
+                <option value="Bonus">Bonus</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Other">Other</option>
+            </select>
+            <div class="flex justify-end gap-2">
+                <button onclick="closeAddIncomeModal()" class="px-3 py-1 text-gray-400 hover:text-white">Cancel</button>
+                <button onclick="saveIncome()"
+                    class="px-3 py-1 bg-blue-500 rounded hover:bg-blue-600 text-white">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
 </body>
+
 </html>

@@ -21,7 +21,10 @@ function register() {
     // Add new user
     user_info.push({ username, password });
     localStorage.setItem('user_info', JSON.stringify(user_info));
-    messageDiv.innerHTML = '<p class="success">Registration successful! <a href="login.html">Login now</a></p>';
+    messageDiv.innerHTML = '<p style = "color: green; font-weight: bold;" class="success">Registration successful! <a href="login.html">Login now</a></p>';
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
+    setTimeout(() => {
+        window.location.href = "login.html";
+    }, 1000);
 }
