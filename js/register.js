@@ -1,4 +1,4 @@
-if(localStorage.getItem('userLogged')){
+if (localStorage.getItem('userLogged')) {
     window.location.href = "../public/dashboard.html";
 }
 function register() {

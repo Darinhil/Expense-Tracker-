@@ -1,4 +1,4 @@
-// logout
+// logout(Tim Tola)
 if (!localStorage.getItem('userLogged')) {
     window.location.href = "../pages/login.html"
 }
@@ -6,7 +6,7 @@ function logout() {
     localStorage.removeItem('userLogged');
     window.location.href = "../pages/login.html"
 }
-// 
+
 
 lucide.createIcons();
 
@@ -112,3 +112,51 @@ function initCharts() {
 
 // Run on load
 initCharts();
+// transaction (Tim Tola)
+const transaction_form = document.getElementById('transaction-form');
+const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+function saveTolocal() {
+    localStorage.setItem('transactions', JSON.stringify(transactions))
+}
+transaction_form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const date = document.getElementById('date');
+    const desc = document.getElementById('desc');
+    const category = document.getElementById('category');
+    const type = document.getElementById('type');
+    const amount = document.getElementById('amount');
+
+    transactions.push({ 'date': date.value, 'description': desc.value, 'category': category.value, 'type': type.value, 'amount': amount.value })
+    saveTolocal();
+    renderItems();
+    date.value = "";
+    desc.value = "";
+    category.value = "";
+    type.value = "";
+    amount.value = "";
+})
+const transaction_list = document.getElementById('transaction-list');
+function renderItems() {
+    let transaction_row = "";
+    transactions.forEach((tran, index) => {
+        transaction_row += `
+    <tr>
+    <td>${tran.date}</td>
+    <td>${tran.description}</td>
+    <td>${tran.category}</td>
+    <td>${tran.type}</td>
+    <td>$${tran.amount}</td>
+    <td><button onclick="deleteTran(${index})" style="background: lightblue;color: blue;font-weight: 600; width: 50px;hight:20px; border-radius: 4px;">Delete</button></td>
+    </tr>
+    `
+    });
+    transaction_list.innerHTML = transaction_row;
+}
+function deleteTran(index) {
+    if (window.confirm("Are you sure?")) {
+        transactions.splice(index, 1)
+        saveTolocal();
+        renderItems();
+    }
+}
+renderItems();

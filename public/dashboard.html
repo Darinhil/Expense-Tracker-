@@ -35,8 +35,8 @@
             </div>
         </div>
         <!-- Add Income Button triggers modal -->
-        <button onclick="openAddIncomeModal()" class="w-40 h-8 bg-blue-500 rounded font-bold hover:text-white">Add
-            Income</button>
+        <!-- <button onclick="openAddIncomeModal()" class="w-40 h-8 bg-blue-500 rounded font-bold hover:text-white">Add
+            Income</button> -->
     </header>
 
     <div class="flex">
@@ -116,34 +116,79 @@
                     </div>
                 </div>
             </section>
+            <!--  -->
+            <section id="transaction" class="card-dark p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold mb-6">Transactions</h3>
+
+                <form id="transaction-form"
+                    class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-8 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Date</label>
+                        <input type="date" id="date"
+                            class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm focus:border-blue-500 outline-none"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Description</label>
+                        <input type="text" id="desc" placeholder="e.g. Rent"
+                            class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm focus:border-blue-500 outline-none"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Category</label>
+                        <select id="category"
+                            class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm focus:border-blue-500 outline-none">
+                            <option value="Salary">Salary</option>
+                            <option value="Food">Food</option>
+                            <option value="Housing">Housing</option>
+                            <option value="Transport">Transportation</option>
+                            <option value="Entertainment">Entertainment</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Type</label>
+                        <select id="type"
+                            class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm focus:border-blue-500 outline-none">
+                            <option value="Income">Income</option>
+                            <option value="Expense">Expense</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Amount</label>
+                        <input type="number" id="amount" placeholder="0.00"
+                            class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm focus:border-blue-500 outline-none"
+                            required>
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition text-sm">
+                            Add
+                        </button>
+                    </div>
+                </form>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-blue-400 border-b border-gray-700 text-sm">
+                                <th class="pb-3">Date</th>
+                                <th class="pb-3">Description</th>
+                                <th class="pb-3">Category</th>
+                                <th class="pb-3">Type</th>
+                                <th class="pb-3">Amount</th>
+                                <th class="pb-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-list" class="text-sm divide-y divide-gray-800">
+                            <tr>
+                                <td class="py-4 text-gray-400" colspan="6">No transactions added yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </main>
     </div>
-
-    <!-- Add Income Modal -->
-    <div id="incomeModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
-        <div class="bg-[#24262d] p-6 rounded-xl w-96 border border-gray-700">
-            <h2 class="text-lg font-bold mb-4 text-blue-400">Add New Income</h2>
-            <label class="block text-sm mb-1">Description</label>
-            <input id="incomeDesc" class="w-full p-2 mb-3 bg-gray-800 rounded text-white"
-                placeholder="Salary, Bonus..." />
-            <label class="block text-sm mb-1">Amount</label>
-            <input id="incomeAmount" type="number" class="w-full p-2 mb-3 bg-gray-800 rounded text-white"
-                placeholder="Enter amount" />
-            <label class="block text-sm mb-1">Type</label>
-            <select id="incomeType" class="w-full p-2 mb-3 bg-gray-800 rounded text-white">
-                <option value="Salary">Salary</option>
-                <option value="Bonus">Bonus</option>
-                <option value="Freelance">Freelance</option>
-                <option value="Other">Other</option>
-            </select>
-            <div class="flex justify-end gap-2">
-                <button onclick="closeAddIncomeModal()" class="px-3 py-1 text-gray-400 hover:text-white">Cancel</button>
-                <button onclick="saveIncome()"
-                    class="px-3 py-1 bg-blue-500 rounded hover:bg-blue-600 text-white">Save</button>
-            </div>
-        </div>
-    </div>
-
     <script src="/js/dashboard.js"></script>
 </body>
 

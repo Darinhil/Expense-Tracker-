@@ -14,6 +14,6 @@ function login() {
         window.location.href = "../public/dashboard.html";
     }
     else{
-        message.innerHTML = '<p>Invalid username or password</p>'
+        message.innerHTML = '<p style="color: blue">Invalid username or password</p>'
     }
 }
