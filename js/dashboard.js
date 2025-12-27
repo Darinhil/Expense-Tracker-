@@ -25,6 +25,7 @@ function showView(seaction){
         link_dashboard.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     }
 }
+// logic seaction(all seaction must do it logic seaction)
 // transaction (Tim Tola)
 const transaction_form = document.getElementById('transaction-form');
 const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
