@@ -6,7 +6,9 @@ function logout() {
     localStorage.removeItem('userLogged');
     window.location.href = "../pages/login.html"
 }
-// logic seaction
+// logic seaction(Tim Tola)
+const greeting = document.getElementById('greeting');
+greeting.textContent = "Wellcome " + localStorage.getItem('userLogged') + '!';
 const link_dashboard = document.getElementById('link-dashboard');
 const link_transactions = document.getElementById('link-transactions');
 const dashboard = document.getElementById('dashboard');
