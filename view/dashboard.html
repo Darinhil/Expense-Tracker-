@@ -27,8 +27,7 @@
 
 <body class="bg-[#1a1c23] text-gray-200 font-sans min-h-screen">
 
-    <header
-        class="flex items-center justify-between px-8 py-4 border-b border-gray-800">
+    <header class="flex items-center justify-between px-8 py-4 border-b border-gray-800">
         <div class="flex items-center gap-2">
             <div class="bg-blue-600 p-1 rounded text-white"><i data-lucide="wallet"></i></div>
             <div>
@@ -36,10 +35,9 @@
                 <p class="text-xs text-gray-500">Take control of your finances</p>
             </div>
         </div>
-        <button 
-        onclick="logout()"
-        class="w-[110px] flex items-center p-3 mt-6 border-b text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-semibold" >
-           <i class="fa fa-sign-out" style="font-size:24px;color:white"></i>
+        <button onclick="logout()"
+            class="w-[110px] flex items-center p-3 mt-6 border-b text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-semibold">
+            <i class="fa fa-sign-out" style="font-size:24px;color:white"></i>
             <i data-lucide="log-out" class="w-5 h-5"></i>
             Logout
         </button>
@@ -68,15 +66,18 @@
                     <i data-lucide="arrow-left-right" class="w-5 h-5"></i> Transactions
                 </a>
                 <a href="#" onclick="showView('budgets')"
-                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors" id="link-budgets">
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors" id="link-budgets"
+                    id="link-budgets">
                     <i data-lucide="pie-chart" class="w-5 h-5"></i> Budgets
                 </a>
                 <a href="#" onclick="showView('reports')"
-                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors" id="link-reports">
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors" id="link-reports"
+                    id="link-reports">
                     <i data-lucide="trending-up" class="w-5 h-5"></i> Reports
                 </a>
                 <a href="#" onclick="showView('savings')"
-                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors" id="link-savings">
+                    class="sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors" id="link-savings"
+                    id="link-savings">
                     <i data-lucide="target" class="w-5 h-5"></i> Savings Goals
                 </a>
                 <button
@@ -195,9 +196,101 @@
                     </table>
                 </div>
             </section>
+            <!--  -->
+            <section id="budget" style="display: none;" class="bg-[#1a1c23] p-8 min-h-screen text-white font-sans">
+
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-semibold text-blue-400">Budget Categories</h2>
+                    <button class="bg-[#3b82f6] hover:bg-blue-500 text-sm px-4 py-1.5 rounded transition shadow-sm">
+                        + Add Category
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <div class="bg-[#24262d] p-6 rounded-xl border border-gray-800 shadow-xl">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="w-10 h-10 bg-pink-500/20 rounded-full flex items-center justify-center text-pink-500 text-xl">
+                                🍴</div>
+                            <div>
+                                <h3 class="font-bold text-gray-100">Food</h3>
+                                <p class="text-xs text-gray-500">Budget: $300.00</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="font-medium text-gray-200">Spent: $200.00</span>
+                            <span class="text-gray-500">/ Remaining: $100.00</span>
+                        </div>
+
+                        <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden mb-3">
+                            <div class="bg-pink-500 h-full w-[67%] transition-all duration-700"></div>
+                        </div>
+
+                        <div class="flex justify-between text-[10px] text-gray-500 uppercase tracking-tight">
+                            <span>67% of budget</span>
+                            <span>$100.00 left</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#24262d] p-6 rounded-xl border border-gray-800 shadow-xl">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 text-xl">
+                                🚗</div>
+                            <div>
+                                <h3 class="font-bold text-gray-100">Transportation</h3>
+                                <p class="text-xs text-gray-500">Budget: $150.00</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="font-medium text-gray-200">Spent: $50.00</span>
+                            <span class="text-gray-500">/ Remaining: $100.00</span>
+                        </div>
+
+                        <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden mb-3">
+                            <div class="bg-blue-400 h-full w-[33%]"></div>
+                        </div>
+
+                        <div class="flex justify-between text-[10px] text-gray-500 uppercase">
+                            <span>33% of budget</span>
+                            <span>$100.00 left</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#24262d] p-6 rounded-xl border border-gray-800 shadow-xl">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div
+                                class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center text-yellow-500 text-xl">
+                                🏠</div>
+                            <div>
+                                <h3 class="font-bold text-gray-100">Housing</h3>
+                                <p class="text-xs text-gray-500">Budget: $1000.00</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="font-medium text-gray-200">Spent: $500.00</span>
+                            <span class="text-gray-500">/ Remaining: $500.00</span>
+                        </div>
+
+                        <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden mb-3">
+                            <div class="bg-yellow-500 h-full w-[50%]"></div>
+                        </div>
+
+                        <div class="flex justify-between text-[10px] text-gray-500 uppercase">
+                            <span>50% of budget</span>
+                            <span>$500.00 left</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
         </main>
     </div>
-    <script src="/js/dashboard.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 
 </html>

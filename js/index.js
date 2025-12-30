@@ -11,20 +11,56 @@ const greeting = document.getElementById('greeting');
 greeting.textContent = "Wellcome " + localStorage.getItem('userLogged') + '!';
 const link_dashboard = document.getElementById('link-dashboard');
 const link_transactions = document.getElementById('link-transactions');
+const link_budgets = document.getElementById('link-budgets');
+const link_reports = document.getElementById('link-reports');
+const link_savings = document.getElementById('link-savings');
 const dashboard = document.getElementById('dashboard');
 const transaction = document.getElementById('transaction');
+const budget = document.getElementById('budget');
 function showView(seaction) {
     if (seaction === "dashboard") {
         dashboard.style.display = "block"
         transaction.style.display = "none";
+        budget.style.display = "none";
         link_dashboard.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_transactions.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_budgets.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_reports.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_savings.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     }
     else if (seaction === "transactions") {
         transaction.style.display = "block"
         dashboard.style.display = "none";
+        budget.style.display = "none";
         link_transactions.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_dashboard.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_budgets.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_reports.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_savings.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+    }
+    else if(seaction === "budgets"){
+        budget.style.display = "block";
+        dashboard.style.display = "none";
+        transaction.style.display = "none";
+        link_budgets.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_dashboard.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_transactions.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_reports.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_savings.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+    }
+    else if(seaction === "reports"){
+        link_reports.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_budgets.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_dashboard.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_transactions.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_savings.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+    }
+    else{
+        link_savings.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_reports.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_budgets.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_dashboard.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
+        link_transactions.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     }
 }
 // transaction (Tim Tola)
@@ -190,7 +226,7 @@ function updateCharts(categoryTotals, income, expense) {
             }
         }
     });
-    
+
 
 
     // Bar Chart - Monthly Overview
@@ -227,3 +263,29 @@ function updateCharts(categoryTotals, income, expense) {
 
 renderItems();
 updateDashboard();
+// budget
+function budgetTracker() {
+    return {
+        budgets: [
+            { id: 1, name: 'Food', limit: 300, spent: 200, icon: '🍴', color: 'text-pink-500', barColor: 'bg-pink-500' },
+            { id: 2, name: 'Transportation', limit: 150, spent: 50, icon: '🚗', color: 'text-blue-400', barColor: 'bg-blue-400' },
+            { id: 3, name: 'Housing', limit: 1000, spent: 500, icon: '🏠', color: 'text-yellow-500', barColor: 'bg-yellow-500' },
+            { id: 4, name: 'Entertainment', limit: 100, spent: 100, icon: '🎮', color: 'text-teal-400', barColor: 'bg-teal-400' },
+            { id: 5, name: 'Shopping', limit: 200, spent: 0, icon: '🛒', color: 'text-purple-500', barColor: 'bg-purple-500' }
+        ],
+        addCategory() {
+            const name = prompt("Enter category name:");
+            if (name) {
+                this.budgets.push({
+                    id: Date.now(),
+                    name: name,
+                    limit: 500,
+                    spent: 0,
+                    icon: '💰',
+                    color: 'text-gray-400',
+                    barColor: 'bg-blue-500'
+                });
+            }
+        }
+    }
+}

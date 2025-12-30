@@ -1,5 +1,5 @@
 if(localStorage.getItem('userLogged')){
-    window.location.href = "../public/dashboard.html";
+    window.location.href = "../view/dashboard.html";
 }
 function login() {
     const username = document.getElementById('username').value.trim();
@@ -11,7 +11,7 @@ function login() {
 
     if(user){
         localStorage.setItem('userLogged', user.username)
-        window.location.href = "../public/dashboard.html";
+        window.location.href = "../view/dashboard.html";
     }
     else{
         message.innerHTML = '<p style="color: blue">Invalid username or password</p>'
