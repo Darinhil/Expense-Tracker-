@@ -12,7 +12,6 @@ greeting.textContent = "Wellcome " + localStorage.getItem("userLogged") + "!";
 const link_dashboard = document.getElementById("link-dashboard");
 const link_transactions = document.getElementById("link-transactions");
 const link_budgets = document.getElementById("link-budgets");
-const link_reports = document.getElementById("link-reports");
 const link_savings = document.getElementById("link-savings");
 const dashboard = document.getElementById("dashboard");
 const transaction = document.getElementById("transaction");
@@ -30,8 +29,6 @@ function showView(seaction) {
       "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     link_budgets.className =
       "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
-    link_reports.className =
-      "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     link_savings.className =
       "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
   } else if (seaction === "transactions") {
@@ -44,8 +41,6 @@ function showView(seaction) {
     link_dashboard.className =
       "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     link_budgets.className =
-      "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
-    link_reports.className =
       "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     link_savings.className =
       "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
@@ -60,34 +55,15 @@ function showView(seaction) {
       "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     link_transactions.className =
       "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
-    link_reports.className =
-      "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     link_savings.className =
       "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
-  } else if (seaction === "reports") {
-    budget.style.display = "none";
-    dashboard.style.display = "none";
-    transaction.style.display = "none";
-    savings.style.display = "none";
-    link_reports.className =
-      "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
-    link_budgets.className =
-      "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
-    link_dashboard.className =
-      "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
-    link_transactions.className =
-      "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
-    link_savings.className =
-      "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
-  } else {
+  }else if(seaction === "savings"){
     savings.style.display = "block";
     budget.style.display = "none";
     dashboard.style.display = "none";
     transaction.style.display = "none";
     link_savings.className =
       "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
-    link_reports.className =
-      "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     link_budgets.className =
       "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     link_dashboard.className =
