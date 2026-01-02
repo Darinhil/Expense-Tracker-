@@ -258,8 +258,8 @@ function updateCharts(categoryTotals, income, expense) {
     });
 }
 
-// Live Search Feature
-const searchInput = document.getElementById('search-input');
+updateDashboard();
+// saving gaol(DARINHIL)
 
 searchInput.addEventListener('input', function () {
     const keyword = searchInput.value.toLowerCase();
