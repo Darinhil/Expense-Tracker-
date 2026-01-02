@@ -244,7 +244,8 @@
 
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl font-semibold text-blue-400">Budget Categories</h2>
-                    <button id="add-category" class="bg-[#3b82f6] hover:bg-blue-500 text-sm px-4 py-1.5 rounded transition shadow-sm">
+                    <button id="add-category"
+                        class="bg-[#3b82f6] hover:bg-blue-500 text-sm px-4 py-1.5 rounded transition shadow-sm">
                         + Add Category
                     </button>
                 </div>
@@ -253,7 +254,50 @@
                     <!-- card display here -->
                 </div>
             </section>
+            <!-- saving gaol -->
+            <section id="savings" style="display: none;">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-semibold text-blue-400">Savings Goals</h2>
+                    <button onclick="openGoalModal()"
+                        class="bg-blue-600 hover:bg-blue-700 text-sm px-4 py-2 rounded font-semibold">
+                        + Add Goal
+                    </button>
+                </div>
+
+                <div id="goalsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </section>
         </main>
+    </div>
+    <div id="goalModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+        <div class="bg-[#24262d] p-6 rounded-xl w-full max-w-md border border-gray-800">
+            <h3 id="modalTitle" class="text-lg font-semibold mb-4 text-blue-400">
+                Add Savings Goal
+            </h3>
+
+            <form id="goalForm" class="space-y-4">
+                <input id="goalName" type="text" placeholder="Goal Name"
+                    class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm" required />
+
+                <input id="targetAmount" type="number" placeholder="Target Amount"
+                    class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm" required />
+
+                <input id="savedAmount" type="number" placeholder="Amount Saved"
+                    class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm" required />
+
+                <input id="targetDate" type="date" class="w-full bg-gray-800 border border-gray-600 rounded p-2 text-sm"
+                    required />
+
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeGoalModal()"
+                        class="px-4 py-2 text-sm border border-gray-600 rounded hover:bg-gray-700">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 rounded font-semibold">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
     <script src="/js/index.js"></script>
 </body>
