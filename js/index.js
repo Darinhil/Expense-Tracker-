@@ -258,8 +258,8 @@ function updateCharts(categoryTotals, income, expense) {
     });
 }
 
-updateDashboard();
-// saving gaol(DARINHIL)
+// Live Search Feature
+const searchInput = document.getElementById('search-input');
 
 searchInput.addEventListener('input', function () {
     const keyword = searchInput.value.toLowerCase();
@@ -379,7 +379,7 @@ form_category.addEventListener('submit', function (e) {
         }
     }
     else{
-        window.alert('Budget amount must be positive!')
+        window.alert('Budget amount must be positive')
     }
     saveBudgetplan();
     loop_cards();
