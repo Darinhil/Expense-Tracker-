@@ -17,11 +17,13 @@ const link_savings = document.getElementById('link-savings');
 const dashboard = document.getElementById('dashboard');
 const transaction = document.getElementById('transaction');
 const budget = document.getElementById('budget');
+const savings = document.getElementById('savings')
 function showView(seaction) {
     if (seaction === "dashboard") {
         dashboard.style.display = "block"
         transaction.style.display = "none";
         budget.style.display = "none";
+        savings.style.display = "none";
         link_dashboard.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_transactions.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_budgets.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
@@ -30,8 +32,9 @@ function showView(seaction) {
     }
     else if (seaction === "transactions") {
         transaction.style.display = "block"
-        dashboard.style.display = "none";
+        dashboard.style.display = "none"
         budget.style.display = "none";
+        savings.style.display = "none";
         link_transactions.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_dashboard.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_budgets.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
@@ -42,6 +45,7 @@ function showView(seaction) {
         budget.style.display = "block";
         dashboard.style.display = "none";
         transaction.style.display = "none";
+        savings.style.display = "none";
         link_budgets.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_dashboard.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_transactions.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
@@ -49,6 +53,10 @@ function showView(seaction) {
         link_savings.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     }
     else if (seaction === "reports") {
+        budget.style.display = "none";
+        dashboard.style.display = "none";
+        transaction.style.display = "none";
+        savings.style.display = "none";
         link_reports.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_budgets.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_dashboard.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
@@ -56,6 +64,10 @@ function showView(seaction) {
         link_savings.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     }
     else {
+        savings.style.display = "block";
+        budget.style.display = "none";
+        dashboard.style.display = "none";
+        transaction.style.display = "none";
         link_savings.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_reports.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_budgets.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
@@ -378,7 +390,7 @@ form_category.addEventListener('submit', function (e) {
             });
         }
     }
-    else{
+    else {
         window.alert('Budget amount must be positive')
     }
     saveBudgetplan();
@@ -471,3 +483,126 @@ function loop_cards() {
 }
 
 loop_cards();
+
+// saving gaol(DARINHIL)
+
+const STORAGE_KEY = "savingsGoals";
+
+function openGoalModal(index = null) {
+    document.getElementById("goalModal").classList.remove("hidden");
+    document.getElementById("goalModal").classList.add("flex");
+
+    if (index !== -1) {
+        editIndex = index;
+        const goals = getGoals();
+        const goal = goals[index];
+
+        document.getElementById("modalTitle").textContent = "Edit Savings Goal";
+        document.getElementById("goalName").value = goal.name;
+        document.getElementById("targetAmount").value = goal.target;
+        document.getElementById("savedAmount").value = goal.saved;
+        document.getElementById("targetDate").value = goal.date;
+    } else {
+        editIndex = -1;
+        document.getElementById("modalTitle").textContent = "Add Savings Goal";
+        document.getElementById("goalForm").reset();
+    }
+}
+
+function closeGoalModal() {
+    document.getElementById("goalModal").classList.add("hidden");
+    document.getElementById("goalModal").classList.remove("flex");
+}
+
+function getGoals() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+}
+
+function saveGoals(goals) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
+}
+
+function renderGoals() {
+    const goals = getGoals();
+    const container = document.getElementById("goalsContainer");
+    container.innerHTML = "";
+
+    if (goals.length === 0) {
+        container.innerHTML =
+            '<p class="text-gray-500 text-sm">No savings goals yet.</p>';
+        return;
+    }
+
+    goals.forEach((goal, index) => {
+        const percent = Math.min(Math.round((goal.saved / goal.target) * 100), 100);
+
+        container.innerHTML += `
+        <div class="bg-[#24262d] p-6 rounded-xl border border-gray-800 shadow-xl">
+          <h3 class="font-bold text-lg text-gray-100">${goal.name}</h3>
+          <p class="text-xs text-gray-500 mb-3">Target: $${goal.target}</p>
+
+          <div class="flex justify-between text-sm mb-2">
+            <span class="text-green-400 font-semibold">$${goal.saved
+            } Saved</span>
+            <span class="text-gray-400">$${goal.target - goal.saved} Left</span>
+          </div>
+
+          <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden mb-3">
+            <div class="bg-green-500 h-full" style="width:${percent}%"></div>
+          </div>
+
+          <div class="flex justify-between text-[10px] text-gray-500 uppercase">
+            <span>${percent}% Complete</span>
+            <span>${goal.date}</span>
+          </div>
+
+          <div class="flex justify-between mt-4 text-sm">
+            <button
+              onclick="openGoalModal(${index})"
+              class="text-blue-400 hover:text-blue-500"
+            >Edit</button>
+            <button
+              onclick="deleteGoal(${index})"
+              class="text-red-400 hover:text-red-500"
+            >Delete</button>
+          </div>
+        </div>
+      `;
+    });
+}
+
+function deleteGoal(index) {
+    const goals = getGoals();
+    goals.splice(index, 1);
+    saveGoals(goals);
+    renderGoals();
+}
+
+document.getElementById("goalForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const goal = {
+        name: goalName.value,
+        target: Number(targetAmount.value),
+        saved: Number(savedAmount.value),
+        date: targetDate.value,
+    };
+
+    const goals = getGoals();
+
+    if (editIndex !== null) {
+        // Update existing goal
+        goals[editIndex] = goal;
+    } else {
+        // Add new goal
+        goals.push(goal);
+    }
+
+    saveGoals(goals);
+    closeGoalModal();
+    renderGoals();
+    editIndex = null;
+});
+
+// Load goals on page start
+renderGoals();
