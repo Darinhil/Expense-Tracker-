@@ -392,24 +392,28 @@ form_category.addEventListener("submit", function (e) {
       budget_plan.push({
         category: category_select.value,
         budget_amount: Number(budget_amount.value),
+        emoji: "🍜",
         spent: spent_food,
       });
     } else if (category_select.value === "Housing") {
       budget_plan.push({
         category: category_select.value,
         budget_amount: Number(budget_amount.value),
+        emoji: "🏠",
         spent: spent_housing,
       });
     } else if (category_select.value === "Transportation") {
       budget_plan.push({
         category: category_select.value,
         budget_amount: Number(budget_amount.value),
+        emoji: "🚌",
         spent: spent_transportation,
       });
     } else {
       budget_plan.push({
         category: category_select.value,
         budget_amount: Number(budget_amount.value),
+        emoji: "🎠",
         spent: spent_entertainment,
       });
     }
@@ -440,6 +444,7 @@ function calculateSpentByCategory(categoryName) {
 function render(item, index) {
   const spent = item.spent;
   const budget = item.budget_amount;
+  const emoji = item.emoji;
   const remaining = budget - spent;
   const percent = Math.min((spent / budget) * 100, 100);
 
@@ -451,7 +456,7 @@ function render(item, index) {
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 bg-pink-500/20 rounded-full flex items-center justify-center text-pink-500 text-xl">
-                    🍜
+                    ${emoji}
                 </div>
                 <div>
                     <h3 class="font-semibold">${item.category}</h3>
@@ -472,7 +477,7 @@ function render(item, index) {
         </div>
 
         <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden mb-3">
-            <div class="bg-pink-500 h-full transition-all duration-700"
+            <div class="bg-teal-500 h-full transition-all duration-700"
                  style="width:${percent}%"></div>
         </div>
 
