@@ -38,7 +38,7 @@ function showView(seaction) {
         link_reports.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_savings.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     }
-    else if(seaction === "budgets"){
+    else if (seaction === "budgets") {
         budget.style.display = "block";
         dashboard.style.display = "none";
         transaction.style.display = "none";
@@ -48,14 +48,14 @@ function showView(seaction) {
         link_reports.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_savings.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     }
-    else if(seaction === "reports"){
+    else if (seaction === "reports") {
         link_reports.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_budgets.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_dashboard.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_transactions.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_savings.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
     }
-    else{
+    else {
         link_savings.className = "sidebar-link active flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_reports.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
         link_budgets.className = "sidebar-link flex items-center gap-3 p-3 rounded-lg transition-colors";
@@ -65,7 +65,7 @@ function showView(seaction) {
 }
 // transaction (Tim Tola)
 const transaction_form = document.getElementById('transaction-form');
-const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 function saveTolocal() {
     localStorage.setItem('transactions', JSON.stringify(transactions))
 }
@@ -126,7 +126,9 @@ function renderItems() {
     `
     });
     transaction_list.innerHTML = transaction_row;
+    transactions = JSON.parse(localStorage.getItem('transactions'));
 }
+data_budget = renderItems();
 function deleteTran(index) {
     if (window.confirm("Are you sure?")) {
         transactions.splice(index, 1)
@@ -146,8 +148,7 @@ function updateTran(index) {
 
     editIndex = index;
 }
-
-
+renderItems();
 // Dashboard (Chem)
 
 
@@ -260,15 +261,15 @@ function updateCharts(categoryTotals, income, expense) {
 // Live Search Feature
 const searchInput = document.getElementById('search-input');
 
-searchInput.addEventListener('input', function() {
+searchInput.addEventListener('input', function () {
     const keyword = searchInput.value.toLowerCase();
 
     // Filter transactions based on description, category, or amount
     const filteredTransactions = transactions.filter(tran => {
         return tran.description.toLowerCase().includes(keyword) ||
-               tran.category.toLowerCase().includes(keyword) ||
-               tran.amount.toString().includes(keyword) ||
-               tran.date.toString().includes(keyword);
+            tran.category.toLowerCase().includes(keyword) ||
+            tran.amount.toString().includes(keyword) ||
+            tran.date.toString().includes(keyword);
     });
 
     renderItemsFiltered(filteredTransactions);
@@ -300,32 +301,173 @@ function renderItemsFiltered(data) {
 
     transaction_list.innerHTML = transaction_row;
 }
-
-renderItems();
 updateDashboard();
-// budget
-function budgetTracker() {
-    return {
-        budgets: [
-            { id: 1, name: 'Food', limit: 300, spent: 200, icon: '🍴', color: 'text-pink-500', barColor: 'bg-pink-500' },
-            { id: 2, name: 'Transportation', limit: 150, spent: 50, icon: '🚗', color: 'text-blue-400', barColor: 'bg-blue-400' },
-            { id: 3, name: 'Housing', limit: 1000, spent: 500, icon: '🏠', color: 'text-yellow-500', barColor: 'bg-yellow-500' },
-            { id: 4, name: 'Entertainment', limit: 100, spent: 100, icon: '🎮', color: 'text-teal-400', barColor: 'bg-teal-400' },
-            { id: 5, name: 'Shopping', limit: 200, spent: 0, icon: '🛒', color: 'text-purple-500', barColor: 'bg-purple-500' }
-        ],
-        addCategory() {
-            const name = prompt("Enter category name:");
-            if (name) {
-                this.budgets.push({
-                    id: Date.now(),
-                    name: name,
-                    limit: 500,
-                    spent: 0,
-                    icon: '💰',
-                    color: 'text-gray-400',
-                    barColor: 'bg-blue-500'
-                });
-            }
+
+
+// budget(Tim Tola)
+const add_category = document.getElementById('add-category');
+const cancel_add_category = document.getElementById('cancel-add-category');
+const addcard = document.getElementById('add-category-form');
+const form_category = document.getElementById('submit-category');
+const category_select = document.getElementById('category-select');
+const budget_amount = document.getElementById('budget-amount');
+const cards = document.getElementById('cards');
+
+let budget_plan = JSON.parse(localStorage.getItem('budget_plan')) || [];
+add_category.addEventListener('click', () => {
+    add_category.style.display = "none";
+    addcard.style.display = "block";
+});
+
+cancel_add_category.addEventListener('click', () => {
+    addcard.style.display = "none";
+    add_category.style.display = "block";
+});
+
+function saveBudgetplan() {
+    localStorage.setItem('budget_plan', JSON.stringify(budget_plan));
+}
+
+form_category.addEventListener('submit', function (e) {
+    e.preventDefault();
+    let spent_food = 0;
+    let spent_housing = 0;
+    let spent_transportation = 0;
+    let spent_entertainment = 0;
+    for (let char of transactions) {
+        if (char.category === "Food") {
+            spent_food += parseInt(char.amount)
+        }
+        else if (char.category === "Housing") {
+            spent_housing += parseInt(char.amount)
+        }
+        else if (char.category === "Transportation") {
+            spent_transportation += parseInt(char.amount)
+        }
+        else {
+            spent_entertainment += parseInt(char.amount)
         }
     }
+    if (budget_amount.value > 0) {
+        if (category_select.value === "Food") {
+            budget_plan.push({
+                category: category_select.value,
+                budget_amount: Number(budget_amount.value),
+                spent: spent_food
+            });
+        }
+        else if (category_select.value === "Housing") {
+            budget_plan.push({
+                category: category_select.value,
+                budget_amount: Number(budget_amount.value),
+                spent: spent_housing
+            });
+        }
+        else if (category_select.value === "Transportation") {
+            budget_plan.push({
+                category: category_select.value,
+                budget_amount: Number(budget_amount.value),
+                spent: spent_transportation
+            });
+        }
+        else {
+            budget_plan.push({
+                category: category_select.value,
+                budget_amount: Number(budget_amount.value),
+                spent: spent_entertainment
+            });
+        }
+    }
+    else{
+        window.alert('Budget amount must be positive!')
+    }
+    saveBudgetplan();
+    loop_cards();
+
+    category.value = "";
+    budget_amount.value = "";
+
+    addcard.style.display = "none";
+    add_category.style.display = "block";
+});
+
+function getTransactions() {
+    return JSON.parse(localStorage.getItem('transactions')) || [];
 }
+
+function calculateSpentByCategory(categoryName) {
+    const transactions = getTransactions();
+    return transactions
+        .filter(tx => tx.category === categoryName && tx.type === "Expense")
+        .reduce((sum, tx) => sum + Number(tx.amount), 0);
+}
+
+function render(item, index) {
+    const spent = item.spent;
+    const budget = item.budget_amount;
+    const remaining = budget - spent;
+    const percent = Math.min((spent / budget) * 100, 100);
+
+    const card = document.createElement('div');
+    card.className = "bg-[#24262d] p-6 rounded-xl border border-gray-800 shadow-xl";
+
+    card.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-pink-500/20 rounded-full flex items-center justify-center text-pink-500 text-xl">
+                    🍜
+                </div>
+                <div>
+                    <h3 class="font-semibold">${item.category}</h3>
+                    <p class="text-sm text-gray-400">Budget: $${budget.toFixed(2)}</p>
+                </div>
+            </div>
+
+            <button class="delete-btn text-red-400 text-xs hover:text-red-600">
+                ✖ Delete
+            </button>
+        </div>
+
+        <div class="flex justify-between text-sm mb-2">
+            <span>Spent: $${spent.toFixed(2)}</span>
+            <span>Remaining: $${remaining.toFixed(2)}</span>
+        </div>
+
+        <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden mb-3">
+            <div class="bg-pink-500 h-full transition-all duration-700"
+                 style="width:${percent}%"></div>
+        </div>
+
+        <div class="flex justify-between text-[10px] text-gray-500 uppercase tracking-tight">
+            <span>${percent.toFixed(0)}% of budget</span>
+            <span>$${remaining.toFixed(2)} left</span>
+        </div>
+    `;
+
+    // DELETE HANDLER
+    card.querySelector('.delete-btn').addEventListener('click', () => {
+        deleteCategory(index);
+    });
+
+    cards.appendChild(card);
+}
+
+function deleteCategory(index) {
+    if (!confirm("Delete this category?")) return;
+
+    budget_plan.splice(index, 1);
+    saveBudgetplan();
+    loop_cards();
+}
+
+
+function loop_cards() {
+    cards.innerHTML = "";
+
+    budget_plan.forEach((item, index) => {
+        item.spent = calculateSpentByCategory(item.category);
+        render(item, index);
+    });
+}
+
+loop_cards();

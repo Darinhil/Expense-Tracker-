@@ -202,96 +202,55 @@
                     </table>
                 </div>
             </section>
-            <!--  -->
-            <section id="budget" style="display: none;" class="bg-[#1a1c23] p-8 min-h-screen text-white font-sans">
+            <!-- budget_plan  -->
+            <section style="display: none;" id="budget" class="bg-[#1a1c23] p-8 min-h-screen text-white font-sans">
+                <!-- Add Category Form -->
+                <div style="display: none;" id="add-category-form">
+                    <div class="bg-[#24262d] p-6 rounded-xl border border-gray-800 shadow-xl">
+                        <h3 class="text-lg font-semibold text-blue-400 mb-4">Add New Budget Category</h3>
+
+                        <form id="submit-category" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Category Name -->
+                            <div>
+                                <label class="text-xs text-gray-400">Type</label>
+                                <select id="category-select"
+                                    class="w-full mt-1 p-2 rounded bg-[#1a1c23] border border-gray-700 text-sm text-white focus:outline-none focus:border-blue-500">
+                                    <option value="Food" selected>Food</option>
+                                    <option value="Housing">Housing</option>
+                                    <option value="Transport">Transportation</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                </select>
+                            </div>
+                            <!-- Budget Amount -->
+                            <div>
+                                <label class="text-xs text-gray-400">Budget Amount ($)</label>
+                                <input id="budget-amount" type="number" placeholder="Budget Amount" required
+                                    class="w-full mt-1 p-2 rounded bg-[#1a1c23] border border-gray-700 text-sm text-white focus:outline-none focus:border-blue-500">
+                            </div>
+                            <!-- Buttons -->
+                            <div class="md:col-span-2 flex justify-end gap-3 mt-2">
+                                <button type="button" id="cancel-add-category"
+                                    class="px-4 py-2 text-sm rounded border border-gray-700 hover:bg-gray-800">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="px-4 py-2 text-sm rounded bg-blue-600 hover:bg-blue-500">
+                                    Add Category
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
 
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl font-semibold text-blue-400">Budget Categories</h2>
-                    <button class="bg-[#3b82f6] hover:bg-blue-500 text-sm px-4 py-1.5 rounded transition shadow-sm">
+                    <button id="add-category" class="bg-[#3b82f6] hover:bg-blue-500 text-sm px-4 py-1.5 rounded transition shadow-sm">
                         + Add Category
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                    <div class="bg-[#24262d] p-6 rounded-xl border border-gray-800 shadow-xl">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div
-                                class="w-10 h-10 bg-pink-500/20 rounded-full flex items-center justify-center text-pink-500 text-xl">
-                                🍴</div>
-                            <div>
-                                <h3 class="font-bold text-gray-100">Food</h3>
-                                <p class="text-xs text-gray-500">Budget: $300.00</p>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between text-sm mb-2">
-                            <span class="font-medium text-gray-200">Spent: $200.00</span>
-                            <span class="text-gray-500">/ Remaining: $100.00</span>
-                        </div>
-
-                        <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden mb-3">
-                            <div class="bg-pink-500 h-full w-[67%] transition-all duration-700"></div>
-                        </div>
-
-                        <div class="flex justify-between text-[10px] text-gray-500 uppercase tracking-tight">
-                            <span>67% of budget</span>
-                            <span>$100.00 left</span>
-                        </div>
-                    </div>
-
-                    <div class="bg-[#24262d] p-6 rounded-xl border border-gray-800 shadow-xl">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div
-                                class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 text-xl">
-                                🚗</div>
-                            <div>
-                                <h3 class="font-bold text-gray-100">Transportation</h3>
-                                <p class="text-xs text-gray-500">Budget: $150.00</p>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between text-sm mb-2">
-                            <span class="font-medium text-gray-200">Spent: $50.00</span>
-                            <span class="text-gray-500">/ Remaining: $100.00</span>
-                        </div>
-
-                        <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden mb-3">
-                            <div class="bg-blue-400 h-full w-[33%]"></div>
-                        </div>
-
-                        <div class="flex justify-between text-[10px] text-gray-500 uppercase">
-                            <span>33% of budget</span>
-                            <span>$100.00 left</span>
-                        </div>
-                    </div>
-
-                    <div class="bg-[#24262d] p-6 rounded-xl border border-gray-800 shadow-xl">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div
-                                class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center text-yellow-500 text-xl">
-                                🏠</div>
-                            <div>
-                                <h3 class="font-bold text-gray-100">Housing</h3>
-                                <p class="text-xs text-gray-500">Budget: $1000.00</p>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between text-sm mb-2">
-                            <span class="font-medium text-gray-200">Spent: $500.00</span>
-                            <span class="text-gray-500">/ Remaining: $500.00</span>
-                        </div>
-
-                        <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden mb-3">
-                            <div class="bg-yellow-500 h-full w-[50%]"></div>
-                        </div>
-
-                        <div class="flex justify-between text-[10px] text-gray-500 uppercase">
-                            <span>50% of budget</span>
-                            <span>$500.00 left</span>
-                        </div>
-                    </div>
-
+                <div id="cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- card display here -->
                 </div>
             </section>
         </main>
