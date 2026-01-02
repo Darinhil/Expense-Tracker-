@@ -174,7 +174,7 @@ function updateTran(index) {
 
   editIndex = index;
 }
-
+renderItems();
 // Dashboard (Chem)
 
 // Dashboard elements
@@ -291,74 +291,7 @@ function updateCharts(categoryTotals, income, expense) {
   });
 }
 
-renderItems();
 updateDashboard();
-// budget
-function budgetTracker() {
-  return {
-    budgets: [
-      {
-        id: 1,
-        name: "Food",
-        limit: 300,
-        spent: 200,
-        icon: "🍴",
-        color: "text-pink-500",
-        barColor: "bg-pink-500",
-      },
-      {
-        id: 2,
-        name: "Transportation",
-        limit: 150,
-        spent: 50,
-        icon: "🚗",
-        color: "text-blue-400",
-        barColor: "bg-blue-400",
-      },
-      {
-        id: 3,
-        name: "Housing",
-        limit: 1000,
-        spent: 500,
-        icon: "🏠",
-        color: "text-yellow-500",
-        barColor: "bg-yellow-500",
-      },
-      {
-        id: 4,
-        name: "Entertainment",
-        limit: 100,
-        spent: 100,
-        icon: "🎮",
-        color: "text-teal-400",
-        barColor: "bg-teal-400",
-      },
-      {
-        id: 5,
-        name: "Shopping",
-        limit: 200,
-        spent: 0,
-        icon: "🛒",
-        color: "text-purple-500",
-        barColor: "bg-purple-500",
-      },
-    ],
-    addCategory() {
-      const name = prompt("Enter category name:");
-      if (name) {
-        this.budgets.push({
-          id: Date.now(),
-          name: name,
-          limit: 500,
-          spent: 0,
-          icon: "💰",
-          color: "text-gray-400",
-          barColor: "bg-blue-500",
-        });
-      }
-    },
-  };
-}
 // saving gaol(DARINHIL)
 
 const STORAGE_KEY = "savingsGoals";
