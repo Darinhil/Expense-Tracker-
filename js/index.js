@@ -448,6 +448,54 @@ function exportTransactionsToJSON(){
   link.click();
 }
 
+// =================== LIVE SEARCH ===================
+const searchInput = document.getElementById("search-input");
+
+searchInput.addEventListener("input", function () {
+  const keyword = searchInput.value.toLowerCase();
+
+  // Filter transactions by description, category, type, amount, or date
+  const filteredTransactions = transactions.filter((tran) => {
+    return (
+      tran.description.toLowerCase().includes(keyword) ||
+      tran.category.toLowerCase().includes(keyword) ||
+      tran.type.toLowerCase().includes(keyword) ||
+      tran.amount.toString().includes(keyword) ||
+      tran.date.toString().includes(keyword)
+    );
+  });
+
+  renderItemsFiltered(filteredTransactions);
+});
+
+// Separate render function for filtered transactions
+function renderItemsFiltered(data) {
+  let transaction_row = "";
+  if (data.length === 0) {
+    transaction_list.innerHTML = `<tr><td colspan="6" style="font-weight:400; text-align:center; color:gray;">No transactions found.</td></tr>`;
+    return;
+  }
+
+  data.forEach((tran, index) => {
+    transaction_row += `
+      <tr>
+        <td style="font-weight:400">${tran.date}</td>
+        <td style="font-weight:400">${tran.description}</td>
+        <td style="font-weight:400">${tran.category}</td>
+        <td style="font-weight:500; color:${tran.type === "Income" ? "#0763f7ff" : "#f80808ff"}">${tran.type}</td>
+        <td style="font-weight:400">$${tran.amount}</td>
+        <td>
+          <button onclick="updateTran(${index})" style="background:lightblue;color:blue;font-weight:500;width:60px;height:20px;border-radius:2px;">Update</button>
+          <button onclick="deleteTran(${index})" style="background:lightblue;color:red;font-weight:500;width:60px;height:20px;border-radius:2px;">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+
+  transaction_list.innerHTML = transaction_row;
+}
+
+
 // =================== INITIAL LOAD ===================
 renderItems();
 loop_cards();
