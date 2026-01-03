@@ -1,3 +1,4 @@
+// By Tim Tola
 // =================== LOGOUT ===================
 if (!localStorage.getItem("userLogged")) {
   window.location.href = "../pages/login.html";
@@ -170,30 +171,76 @@ function updateDashboard() {
 
   updateCharts(categoryTotals, totalIncome, totalExpense);
 }
-
+// By Khoeurn Chem
 // =================== CHARTS ===================
 let spendingChart, overviewChart;
 
 function updateCharts(categoryTotals, income, expense) {
   const ctx1 = document.getElementById("spendingChart").getContext("2d");
   const ctx2 = document.getElementById("overviewChart").getContext("2d");
+  const isMobile = window.innerWidth < 768; // if it Mobile
 
   if (spendingChart) spendingChart.destroy();
   if (overviewChart) overviewChart.destroy();
 
   spendingChart = new Chart(ctx1, {
-    type: "pie",
+    type: isMobile ? 'bar' : 'pie',
     data: {
       labels: Object.keys(categoryTotals),
-      datasets: [{ data: Object.values(categoryTotals), backgroundColor: ["#ff2d2dff","#ffd012ff","#157fffff","#11ffa8ff","#7243ffff"] }]
+      datasets: [{ data: Object.values(categoryTotals), backgroundColor: ["#ff2d2dff","#ffd012ff","#157fffff","#11ffa8ff","#7243ffff"], barPercentage: 0.8,  categoryPercentage: 1.0  }]
     },
-    options: { maintainAspectRatio:false, plugins:{legend:{labels:{color:"#fff"}}} }
+    
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: isMobile ? { top: 20, bottom: 20 } : {}
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: isMobile ? 'none' : 'left',
+          labels: {
+            font: { size: isMobile ? 10 : 14 },
+            boxWidth: isMobile ? 10 : 20,
+            padding: isMobile ? 8 : 20,
+            usePointStyle: true
+          }
+        }
+      },
+      scales: isMobile ? {
+        x: { ticks: { font: { size: 10 }, color: 'white' } },
+        y: { ticks: { font: { size: 10 }, color: 'white' } }
+      } : {}
+    }
   });
 
   overviewChart = new Chart(ctx2, {
     type: "bar",
     data: { labels:["Income","Expense"], datasets:[{label:"Amount",data:[income,expense],backgroundColor:["#0763f7ff","#f80808ff"]}] },
-    options: { scales:{y:{ticks:{color:"#e5e7eb"},beginAtZero:true}, x:{ticks:{color:"#e5e7eb"}}}, plugins:{legend:{display:false}} }
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: isMobile ? { top: 20, bottom: 20 } : {}
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: isMobile ? 'none' : 'none',
+          labels: {
+            font: { size: isMobile ? 10 : 14 },
+            boxWidth: isMobile ? 10 : 20,
+            padding: isMobile ? 8 : 20,
+            usePointStyle: true
+          }
+        }
+      },
+      scales: isMobile ? {
+        x: { ticks: { font: { size: 10 }, color: 'white' } },
+        y: { ticks: { font: { size: 10 }, color: 'white' } }
+      } : {}
+    }
   });
 }
 
@@ -311,6 +358,49 @@ function deleteGoal(index){
 
 renderGoals();
 
+// Profile image upload and display logic
+const profileContainer = document.getElementById('profileImageContainer');
+const uploadInput = document.getElementById('uploadInput');
+const profileImage = document.getElementById('profileImage');
+const defaultIcon = document.getElementById('defaultIcon');
+
+// When user clicks the profile circle
+profileContainer.addEventListener('click', () => {
+  uploadInput.click();
+});
+
+// When user selects an image
+uploadInput.addEventListener('change', function() {
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const imageData = e.target.result;
+
+      // Show the image and hide the icon
+      profileImage.src = imageData;
+      profileImage.classList.remove('hidden');
+      defaultIcon.classList.add('hidden');
+
+      // Save to localStorage
+      localStorage.setItem('userProfileImage', imageData);
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+// Load saved image on page load
+window.addEventListener('load', () => {
+  const savedImage = localStorage.getItem('userProfileImage');
+  if (savedImage) {
+    profileImage.src = savedImage;
+    profileImage.classList.remove('hidden');
+    defaultIcon.classList.add('hidden');
+  }
+});
+
+
+// By Tha Darilnheil
 // =================== BUDGET PLAN ===================
 const add_category = document.getElementById("add-category");
 const cancel_add_category = document.getElementById("cancel-add-category");
