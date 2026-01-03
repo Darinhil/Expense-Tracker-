@@ -388,7 +388,7 @@ uploadInput.addEventListener('change', function() {
     reader.readAsDataURL(file);
   }
 });
-
+console.log(profileImage)
 // Load saved image on page load
 window.addEventListener('load', () => {
   const savedImage = localStorage.getItem('userProfileImage');
@@ -398,7 +398,10 @@ window.addEventListener('load', () => {
     defaultIcon.classList.add('hidden');
   }
 });
-
+document.getElementById('deleteImage').addEventListener('click', function(){
+  localStorage.removeItem('userProfileImage');
+  location.reload()
+})
 
 // By Tha Darilnheil
 // =================== BUDGET PLAN ===================
