@@ -311,8 +311,8 @@ function renderItemsFiltered(data) {
         }; ">${tran.type}</td>
         <td style = "font-weight: 400;">$${tran.amount}</td>
         <td>
-            <button onclick="updateTran(${index})" style="background: lightblue;color: blue;font-weight: 500; width: 60px;hight:20px; border-radius: 2px;">Update</button>
-            <button onclick="deleteTran(${index})" style="background: lightblue;color: red;font-weight: 500; width: 60px;hight:20px; border-radius: 2px;">Delete</button>
+            <button onclick="updateTran(${index})" style="background: white;color: blue;font-weight: 500; width: 60px;hight:20px; border-radius: 2px;">Update</button>
+            <button onclick="deleteTran(${index})" style="background: white;color: red;font-weight: 500; width: 60px;hight:20px; border-radius: 2px;">Delete</button>
         </td>
         </tr>
         `;
